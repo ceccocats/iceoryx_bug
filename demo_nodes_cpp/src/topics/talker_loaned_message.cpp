@@ -77,11 +77,11 @@ public:
         // data type, the memory for the message will be allocated on the heap within
         // the scope of the `LoanedMessage` instance.
         // After the call to `publish()`, the message will be correctly allocated.
-        auto non_pod_loaned_msg = non_pod_pub_->borrow_loaned_message();
-        auto non_pod_msg_data = "Hello World: " + std::to_string(count_);
-        non_pod_loaned_msg.get().data = non_pod_msg_data;
-        RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", non_pod_msg_data.c_str());
-        non_pod_pub_->publish(std::move(non_pod_loaned_msg));
+        // auto non_pod_loaned_msg = non_pod_pub_->borrow_loaned_message();
+        // auto non_pod_msg_data = "Hello World: " + std::to_string(count_);
+        // non_pod_loaned_msg.get().data = non_pod_msg_data;
+        // RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", non_pod_msg_data.c_str());
+        // non_pod_pub_->publish(std::move(non_pod_loaned_msg));
       };
 
     // Create a publisher with a custom Quality of Service profile.
@@ -90,7 +90,7 @@ public:
     non_pod_pub_ = this->create_publisher<std_msgs::msg::String>("chatter", qos);
 
     // Use a timer to schedule periodic message publishing.
-    timer_ = this->create_wall_timer(1s, publish_message);
+    timer_ = this->create_wall_timer(1ns, publish_message);
   }
 
 private:

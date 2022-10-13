@@ -15,7 +15,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp_components/register_node_macro.hpp"
 
-#include "std_msgs/msg/string.hpp"
+#include "std_msgs/msg/float64.hpp"
 
 #include "demo_nodes_cpp/visibility_control.h"
 
@@ -34,19 +34,19 @@ public:
     // Variations of this function also exist using, for example UniquePtr for zero-copy transport.
     setvbuf(stdout, NULL, _IONBF, BUFSIZ);
     auto callback =
-      [this](const std_msgs::msg::String::SharedPtr msg) -> void
+      [this](const std_msgs::msg::Float64::SharedPtr msg) -> void
       {
-        RCLCPP_INFO(this->get_logger(), "I heard: [%s]", msg->data.c_str());
+        RCLCPP_INFO(this->get_logger(), "I heard");
       };
     // Create a subscription to the topic which can be matched with one or more compatible ROS
     // publishers.
     // Note that not all publishers on the same topic with the same type will be compatible:
     // they must have compatible Quality of Service policies.
-    sub_ = create_subscription<std_msgs::msg::String>("chatter", 10, callback);
+    sub_ = create_subscription<std_msgs::msg::Float64>("chatter_pod", 10, callback);
   }
 
 private:
-  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
+  rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr sub_;
 };
 
 }  // namespace demo_nodes_cpp
